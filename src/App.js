@@ -4,6 +4,8 @@ import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import Imagelinkform from './components/Imagelinkform/Imagelinkform';
 import Rank from './components/Rank/Rank';
+import Register from './components/Register/Register';
+import Signin from './components/Signin/Signin';
 import Facerecognition from './components/Facerecognition/Facerecognition';
 import Particles from 'react-particles-js';
 import 'tachyons'
@@ -36,6 +38,8 @@ class App extends Component{
 			input:'',
 			imageurl:'', 
 			box:{},
+			route:'signin',
+			issigned:'false',
 		}
 	}
 
@@ -74,17 +78,47 @@ class App extends Component{
 			.catch(err=>console.log(err));
 			
 	}
+
+	onroutechanges=(route)=>{
+		console.log(0,this.state.route,route,this.state.issigned);
+		if(route==='home'){
+			console.log('in')
+
+			this.setState(Object.assign(this.state,{issigned:true}))
+		}
+		else
+			this.setState(Object.assign(this.state,{issigned:false}))
+		this.setState(Object.assign(this.state,{route:route}));
+		console.log(1,this.state.route,this.state.issigned);
+	}
+
+	onsignout=(route)=>{
+		this.setState({route:'route'});
+	}
 	render(){
 	  return (
+
 	    <div className="App">
+	  	
 	    <Particles  className='particles'
 		      params={partilesoptions}
 		    />
-	     <Navigation />
-	     <Logo/>
-	     <Rank/>
-	     <Imagelinkform onInputchange={this.onInputchange} onSubmit={this.onSubmit}/>
-	     <Facerecognition box={this.state.box} imageurl={this.state.imageurl}/>
+
+		<Navigation onroutechanges={this.onroutechanges} issigned={this.state.issigned} />
+		  {
+		  	this.state.route==='home'
+		  	?<div>
+			     <Logo/>
+			     <Rank/>
+			     <Imagelinkform onInputchange={this.onInputchange}  onSubmit={this.onSubmit}/>
+			     <Facerecognition box={this.state.box} imageurl={this.state.imageurl}/>
+			   </div>
+		  	:(
+		  		this.state.route==='signin'
+		  		?<Signin onroutechanges={this.onroutechanges}/>
+		  		:<Register onroutechanges={this.onroutechanges}/>
+			)
+		  }  
 	    </div>
 	  );
 	}
