@@ -2,8 +2,8 @@ import React from 'react';
 
 class Signin extends React.Component{
 	
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state={
 			signinemail:'',
 			signinpassword:'',
@@ -19,9 +19,9 @@ class Signin extends React.Component{
 		this.setState(Object.assign(this.state,{signinpassword:event.target.value}));
 	}
 
-	// onformsubmit=(e)=>{
-	// 	e.preventDefault();
-	// }
+	onformsubmit=(e)=>{
+		e.preventDefault();
+	}
 	onsubmitsignin=(e)=>{
 		//e.preventDefault();
 		//console.log(this.state,'sffd');
@@ -34,9 +34,10 @@ class Signin extends React.Component{
 			}),
 		})
 		.then(response=>response.json())
-		.then(data=>{
-			console.log(data);
-			if(data==='success'){
+		.then(user=>{
+		//	console.log(data);
+			if(user.id){
+				this.props.loaduser(user);
 			this.props.onroutechanges('home');
 			}
 		})

@@ -1,10 +1,12 @@
 import React from 'react';
 
 const Navigation=({onroutechanges,issigned})=>{
-	console.log('sdf');
-	console.log(issigned);
+//	console.log('sdf');
+//	console.log(issigned);
 	
 		if(issigned){
+			
+			//	console.log('amef',issigned);
 			return(
 				<nav style={{display:'flex',justifyContent:'flex-end'}}>
 				<p onClick={()=>onroutechanges('signin')} className='f3 link dim black underline pa3 pointer'> Sign Out </p> 
