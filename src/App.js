@@ -43,6 +43,14 @@ class App extends Component{
 		}
 	}
 
+
+	//componentDidMount(){
+	//	console.log('sdf1');
+	//	fetch('http://192.168.69.21:3000')
+	//		.then(response =>response.json())
+	//		.then(console.log)
+	//};
+
 	calculatefacelocation=(data)=>{
 			console.log(data);
 			const clarifaiface=data.outputs[0].data.regions[0].region_info.bounding_box;
