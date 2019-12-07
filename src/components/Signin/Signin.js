@@ -25,7 +25,7 @@ class Signin extends React.Component{
 	onsubmitsignin=(e)=>{
 		//e.preventDefault();
 		//console.log(this.state,'sffd');
-		fetch('http://192.168.69.21:3000/signin',{
+		fetch('http://localhost:3000/signin',{
 			method:'POST',
 			headers:{'Content-Type':'application/json'},
 			body:JSON.stringify({

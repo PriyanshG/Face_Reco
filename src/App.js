@@ -9,10 +9,6 @@ import Signin from './components/Signin/Signin';
 import Facerecognition from './components/Facerecognition/Facerecognition';
 import Particles from 'react-particles-js';
 import 'tachyons'
-import Clarifai from 'clarifai';
-const app = new Clarifai.App({
- apiKey: '641529200e4742079d67230d6c230abc'
-});
 
 
 const partilesoptions={
@@ -30,11 +26,9 @@ const partilesoptions={
 	     
 
 }
-class App extends Component{
 
-	constructor(){
-		super();
-		this.state={
+
+const intialstate={
 			input:'',
 			imageurl:'', 
 			box:{},
@@ -48,13 +42,18 @@ class App extends Component{
 				entries:0,
 				joined:'',
 			}
-		}
+	}
+class App extends Component{
+
+	constructor(){
+		super();
+		this.state=intialstate;
 	}
 
 
 	//componentDidMount(){
 	//	console.log('sdf1');
-	//	fetch('http://192.168.69.21:3000')
+	//	fetch('http://localhost:3000')
 	//		.then(response =>response.json())
 	//		.then(console.log)
 	//};
@@ -98,13 +97,18 @@ class App extends Component{
 	onSubmit=()=>{
 		console.log('click');
 		this.setState({imageurl:this.state.input});
-			app.models.predict(
-				"a403429f2ddf4b49b307e318f00e528b", 
-				this.state.input)
+			fetch('http://localhost:3000/imageurl',{
+				method:'post',
+				headers:{'Content-Type':'application/json'},
+				body:JSON.stringify({
+					input:this.state.input
+				})
+			})
+			.then(response=>response.json())
 			.then (response=>{
 				console.log(this.state.user.id);
 				if(response){
-					fetch('http://192.168.69.21:3000/image',{
+					fetch('http://localhost:3000/image',{
 						method:'put',
 						headers:{'Content-Type':'application/json'},
 						body:JSON.stringify({
@@ -116,14 +120,15 @@ class App extends Component{
 						this.setState(Object.assign(this.state.user,{entries:count}))
 
 					})
+					.catch(console.log)
 					
 
-					console.log(this.state.user.id);
+					//  console.log(this.state.user.id);
 					
 				}			
 
 			this.displayfacebox(this.calculatefacelocation(response))
-			.catch(err=>console.log(err));
+			//.catch(err=>console.log(err));
 			})
 	}
 
@@ -135,8 +140,10 @@ class App extends Component{
 
 			this.setState(Object.assign(this.state,{issigned:true}))
 		}
-		else
+		else{
+			this.setState(Object.assign(this.state,intialstate));
 			this.setState(Object.assign(this.state,{issigned:false}))
+		}
 		this.setState(Object.assign(this.state,{route:route}));
 	//	console.log(1,this.state.route,this.state.issigned);
 	}
