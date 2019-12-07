@@ -96,6 +96,7 @@ class App extends Component{
 	}
 	onSubmit=()=>{
 		console.log('click');
+		if(this.state.input.length){
 		this.setState({imageurl:this.state.input});
 			fetch('https://mighty-escarpment-70042.herokuapp.com/imageurl',{
 				method:'post',
@@ -130,6 +131,7 @@ class App extends Component{
 			this.displayfacebox(this.calculatefacelocation(response))
 			//.catch(err=>console.log(err));
 			})
+		}
 	}
 
 
