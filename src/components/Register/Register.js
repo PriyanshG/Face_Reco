@@ -36,7 +36,7 @@ class Register extends React.Component{
 	onregisterin=(event)=>{
 		//e.preventDefault();
 		//console.log(this.state,'sffd');
-		fetch('http://localhost:3000/register',{
+		fetch('https://mighty-escarpment-70042.herokuapp.com/register',{
 			method:'POST',
 			headers:{'Content-Type':'application/json'},
 			body:JSON.stringify({
@@ -53,6 +53,7 @@ class Register extends React.Component{
 			this.props.onroutechanges('home');
 			}
 		})
+		//.catch(console.log('unable to register'));
 
 	} 
 
