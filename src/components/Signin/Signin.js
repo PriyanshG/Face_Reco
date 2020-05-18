@@ -1,4 +1,5 @@
 import React from 'react';
+import { triggerAlert } from '../../utils/getAlert/getAlert';
 
 class Signin extends React.Component{
 	
@@ -35,10 +36,12 @@ class Signin extends React.Component{
 		})
 		.then(response=>response.json())
 		.then(user=>{
-		//	console.log(data);
+			console.log(user);
 			if(user.id){
 				this.props.loaduser(user);
 			this.props.onroutechanges('home');
+			} else{
+				triggerAlert({icon:'error', title: user});
 			}
 		})
 
