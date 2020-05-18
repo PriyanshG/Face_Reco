@@ -1,4 +1,5 @@
 import React from 'react'
+import { triggerAlert } from '../../utils/getAlert/getAlert';
 
 class Register extends React.Component{
 
@@ -11,20 +12,14 @@ class Register extends React.Component{
 		}
 	}
 	onemailchange=(event)=>{
-
-		console.log(event.target.value);
 		this.setState(Object.assign(this.state,{email:event.target.value}));
 	}
 
 	onpasswordchange=(event)=>{
-		//console.log('111');
-		console.log(event.target.value);
 		this.setState(Object.assign(this.state,{password:event.target.value}));
 	}
 
 	onnamechange=(event)=>{
-		//console.log('111');
-		console.log(event.target.value);
 		this.setState(Object.assign(this.state,{name:event.target.value}));
 	}
 
@@ -35,7 +30,6 @@ class Register extends React.Component{
 
 	onregisterin=(event)=>{
 		//e.preventDefault();
-		//console.log(this.state,'sffd');
 		fetch('https://mighty-escarpment-70042.herokuapp.com/register',{
 			method:'POST',
 			headers:{'Content-Type':'application/json'},
@@ -47,18 +41,17 @@ class Register extends React.Component{
 		})
 		.then(response=>response.json())
 		.then(user=>{
-			//console.log(user);
 			if(user.id){
 				this.props.loaduser(user);
 			this.props.onroutechanges('home');
+			} else{
+				triggerAlert({icon:'error', title: user});
 			}
 		})
-		//.catch(console.log('unable to register'));
 
 	} 
 
 	render(){
-	//console.log('sdf');
 	return(
 	<article className="br ba dark-gray shadow-5 b--black-10 mv4 w-100 w-50-m w-25-l mw5 center">
 			<main className="pa4 black-80">
