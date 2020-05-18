@@ -50,14 +50,6 @@ class App extends Component{
 		this.state=intialstate;
 	}
 
-
-	//componentDidMount(){
-	//	console.log('sdf1');
-	//	fetch('https://mighty-escarpment-70042.herokuapp.com/')
-	//		.then(response =>response.json())
-	//		.then(console.log)
-	//};
-
 	loaduser=(data)=>{
 		this.setState(Object.assign(this.state.user,{
 			id:data.id,
@@ -66,15 +58,12 @@ class App extends Component{
 			entries:data.entries,
 			joined:data.joined
 			}))
-		console.log(this.state.id);
 	}
 	calculatefacelocation=(data)=>{
-		//	console.log(data);
 			const clarifaiface=data.outputs[0].data.regions[0].region_info.bounding_box;
 			const image=document.getElementById('inputimage');
 			const width=Number(image.width);
 			const height=Number(image.height);
-		//	console.log(width,height);
 			return {
 				leftco:clarifaiface.left_col*width,
 				topro:clarifaiface.top_row*height,
@@ -85,17 +74,13 @@ class App extends Component{
 	}
 	onInputchange=(event)=>{
 		this.setState({input:event.target.value});
-		/*console.log(event.target.value);
-		console.log(this.state.input);*/
 	}
 
 
 	displayfacebox=(box)=>{
-	//	console.log(box);
 		this.setState({box:box});
 	}
 	onSubmit=()=>{
-		console.log('click');
 		if(this.state.input.length){
 		this.setState({imageurl:this.state.input});
 			fetch('https://mighty-escarpment-70042.herokuapp.com/imageurl',{
@@ -107,7 +92,6 @@ class App extends Component{
 			})
 			.then(response=>response.json())
 			.then (response=>{
-				console.log(this.state.user.id);
 				if(response){
 					fetch('https://mighty-escarpment-70042.herokuapp.com/image',{
 						method:'put',
@@ -121,24 +105,16 @@ class App extends Component{
 						this.setState(Object.assign(this.state.user,{entries:count}))
 
 					})
-					.catch(console.log)
-					
-
-					//  console.log(this.state.user.id);
-					
 				}			
 
 			this.displayfacebox(this.calculatefacelocation(response))
-			//.catch(err=>console.log(err));
 			})
 		}
 	}
 
 
 	onroutechanges=(route)=>{
-	//	console.log(0,this.state.route,route,this.state.issigned);
 		if(route==='home'){
-		//	console.log('in')
 
 			this.setState(Object.assign(this.state,{issigned:true}))
 		}
@@ -147,7 +123,6 @@ class App extends Component{
 			this.setState(Object.assign(this.state,{issigned:false}))
 		}
 		this.setState(Object.assign(this.state,{route:route}));
-	//	console.log(1,this.state.route,this.state.issigned);
 	}
 
 	onsignout=(route)=>{

@@ -16,7 +16,6 @@ class Signin extends React.Component{
 	}
 
 	onpasswordchange=(event)=>{
-		//console.log('111');
 		this.setState(Object.assign(this.state,{signinpassword:event.target.value}));
 	}
 
@@ -25,7 +24,6 @@ class Signin extends React.Component{
 	}
 	onsubmitsignin=(e)=>{
 		//e.preventDefault();
-		//console.log(this.state,'sffd');
 		fetch('https://mighty-escarpment-70042.herokuapp.com/signin',{
 			method:'POST',
 			headers:{'Content-Type':'application/json'},
@@ -36,7 +34,6 @@ class Signin extends React.Component{
 		})
 		.then(response=>response.json())
 		.then(user=>{
-			console.log(user);
 			if(user.id){
 				this.props.loaduser(user);
 			this.props.onroutechanges('home');
